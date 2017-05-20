@@ -2151,6 +2151,12 @@ prop_checkCatastrophicRm12= verify checkCatastrophicRm "rm -r /{{usr,},{bin,sbin
 prop_checkCatastrophicRm13= verifyNot checkCatastrophicRm "rm -r /{{a,b},{c,d}}/$exec"
 prop_checkCatastrophicRmA = verify checkCatastrophicRm "rm -rf /usr /lib/nvidia-current/xorg/xorg"
 prop_checkCatastrophicRmB = verify checkCatastrophicRm "rm -rf \"$STEAMROOT/\"*"
+
+-- FIXME: I'm hoping I can figure out how to test shellcheck disable statements here.
+
+prop_checkCatastrophicRmC = verifyNot checkCatastrophicRm "#shellcheck disable=SC2114\nrm -rf /home"
+
+
 checkCatastrophicRm params t@(T_SimpleCommand id _ tokens) | t `isCommand` "rm" =
     when (any isRecursiveFlag simpleArgs) $
         mapM_ (mapM_ checkWord . braceExpand) tokens
