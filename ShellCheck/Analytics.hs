@@ -2161,7 +2161,7 @@ checkCatastrophicRm params t@(T_SimpleCommand id _ tokens) | t `isCommand` "rm" 
         case getLiteralString token of
             Just str ->
                 when (fixPath str `elem` importantPaths) $
-                    warn (getId token) 2114 "Warning: deletes a system directory. Use 'rm --' to disable this message."
+                    warn (getId token) 2114 "Warning: deletes a system directory."
             Nothing ->
                 checkWord' token
 
